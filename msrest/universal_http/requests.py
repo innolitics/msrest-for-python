@@ -106,6 +106,7 @@ class BasicRequestsHTTPSender(HTTPSender):
     def __init__(self, session=None):
         # type: (Optional[requests.Session]) -> None
         self.session = session or requests.Session()
+        self.session.verify = False
 
     def __enter__(self):
         # type: () -> BasicRequestsHTTPSender
@@ -207,6 +208,7 @@ class RequestsHTTPSender(BasicRequestsHTTPSender):
             return self._session_mapping.session
         except AttributeError:
             self._session_mapping.session = requests.Session()
+            self._session_mapping.session.verify = False
             self._init_session(self._session_mapping.session)
             return self._session_mapping.session
 
